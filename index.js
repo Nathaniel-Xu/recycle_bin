@@ -19,6 +19,11 @@ let notes = [
   }
 ]
 
+function generateRandom() {
+  return 
+}
+
+
 app.use(cors());
 
 app.get('/', (request, response) => {
@@ -27,6 +32,24 @@ app.get('/', (request, response) => {
 
 app.get('/api/notes', (request, response) => {
   response.json(notes)
+})
+
+app.get('/requests', (request, response) => {
+  const randomSuffix = Math.floor(Math.random() * 10000)
+  let url = `http://localhost:3001/requests/${randomSuffix}`
+  response.send(url)
+});
+
+app.post('/requests', (request, response) => {
+  //Zach method
+  //we have the url in express (or we receive and parse it)
+  //here we create a SQL row for the first table
+  //send back a new url
+
+  //Steve method
+  // dont need to send data
+  // just start function call for db to create new row
+  // response returns bin_path to display on screen
 })
 
 const PORT = 3001

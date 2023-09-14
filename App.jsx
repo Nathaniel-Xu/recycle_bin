@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react'
 
-
-
-//setState({apiResponse: res}
-
-
 const App = () => {
   const [text, setText] = useState([])
+  const [url, setUrl] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:3001/api/notes")
@@ -15,10 +11,17 @@ const App = () => {
       .catch(err => err)
   }, []);
 
+  useEffect(() => {
+    fetch("http://localhost:3001/requests")
+    .then(res => res.text())
+    .then(res => setUrl(res))
+    .catch(err => err)
+  }, [])
+
   return (
     <div>
       <Header/>
-      <Link href="/new" text="new bin"/>
+      <Form url={url}/>
       <Table text={text}/>
     </div>
   )
@@ -85,6 +88,21 @@ const RowEntry = (props) => {
 
 const Link = (props) => {
   return <a href={props.href}>{props.text}</a>
+}
+
+const Form = (props) => {
+  const addNote = (e) => {
+    e.preventDefault()
+    location.reload()
+  }
+
+  return (
+    <form onSubmit={addNote} method="post" action="http://localhost:3001/requests">
+        <label for="hook-url">Hook url: {props.url}</label><br></br>
+
+        <button type="submit">deploy</button>
+      </form>   
+  )
 }
 
 

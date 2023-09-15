@@ -1,6 +1,3 @@
-CREATE DATABASE recycledb;
-
-\c recycledb
 
 CREATE TABLE bin(
   id uuid PRIMARY KEY,

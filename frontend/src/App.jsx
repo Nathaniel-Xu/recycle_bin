@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Container, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper, Button } from '@mui/material'
 
 const App = () => {
   const [text, setText] = useState([])
@@ -19,25 +20,32 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <Container>
       <Header/>
       <Form />
       <P bins={bins}/>
       <Table text={text}/>
-    </div>
+    </Container>
   )
 }
 
 const Header = () => {
-  return <h1>🦅 Team 5 Golden Eagles 🦅  ♻️♻️♻️</h1>
+  return (
+    <div>
+      <h1>🦅 Team 5 Golden Eagles 🦅</h1>
+      <h1>♻️♻️♻️ RecycleBin ♻️♻️♻️</h1>
+    </div>
+  )  
 }
 
 const P = (props) => {
   console.log(props)
   return (
     <div>
-    {props.bins.map(bin => 
-      <p>{"http://localhost:3000/" + bin.bin_path}</p>
+    {props.bins.map(bin =>
+      <TableRow>
+        <TableCell>{"http://localhost:3000/" + bin.bin_path}</TableCell>
+        </TableRow>
     )}
     </div>
   )
@@ -45,24 +53,29 @@ const P = (props) => {
 
 const Table = (text) => {
   return (
-  <table>
-    <thead>
-      <RowNames/>
-    </thead>
-    <tbody>
-      {text.text.map((t, idx) => {
-        return (
-        <RowEntry 
-        key={idx}
-        received_at={t.received_at}
-        http_path={t.http_path}
-        http_method={t.http_method}
-        body={t.body}
-        />
-        )
-})}
-    </tbody>
-  </table>
+  <TableContainer component={Paper}>
+    <table>
+      <TableHead>
+        <RowNames>
+          <RowHead>Time</RowHead>
+          <RowHead>Path</RowHead>
+          <RowHead>Method</RowHead>
+          <RowHead>Body</RowHead>
+        </RowNames>
+      </TableHead>
+      <TableBody>
+        {text.text.map((t, idx) => 
+          <TableRow key={idx}>
+            <TableCell>{t.received_at}</TableCell>
+            <TableCell>{t.http_path}</TableCell>
+            <TableCell>{t.http_method}</TableCell>
+            <TableCell>body={t.body}</TableCell>
+          </TableRow>
+          )}
+      </TableBody>
+  }
+    </table>
+  </TableContainer>
   )
 }
 
@@ -83,16 +96,16 @@ const RowHead = (props) => {
   )
 }
 
-const RowEntry = (props) => {
-  return (
-    <tr key={props.id}>
-      <td>{props.received_at}</td>
-      <td>{props.http_path}</td>
-      <td>{props.http_method}</td>
-      <td>{props.body}</td>
-    </tr>
-  )
-}
+// const RowEntry = (props) => {
+//   return (
+//     <tr key={props.id}>
+//       <td>{props.received_at}</td>
+//       <td>{props.http_path}</td>
+//       <td>{props.http_method}</td>
+//       <td>{props.body}</td>
+//     </tr>
+//   )
+// }
 
 const Link = (props) => {
   return <a href={props.href}>{props.text}</a>
@@ -117,7 +130,7 @@ const Form = () => {
      method="post" action="http://localhost:3000/">
         {/* <label for="hook-url">Hook url: {props.url}</label><br></br> */}
 
-        <button type="submit">deploy</button>
+        <Button variant="contained" color="primary" type="submit">deploy</Button>
       </form>   
   )
 }

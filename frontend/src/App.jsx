@@ -73,7 +73,6 @@ const Table = (text) => {
           </TableRow>
           )}
       </TableBody>
-  }
     </table>
   </TableContainer>
   )
